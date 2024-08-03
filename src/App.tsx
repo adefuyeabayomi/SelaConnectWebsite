@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react'
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect } from 'react'
+import {  useSearchParams } from "react-router-dom";
 import './App.css'
 
 function App():React.JSX.Element {
   const [searchParams] = useSearchParams();
   const delivery = searchParams.get('delivery');
 
-  const payWithMonnify = async (orderId:string) => {
+  const payWithMonnify = async () => {
     let monnify = window.MonnifySDK
     monnify.initialize({
         amount: 10000,
         currency: "NGN",
-        reference: orderId,
+        reference: delivery,
         customerFullName: 'Abayomi Adefuye',
         customerEmail: 'adefuyeabayomi16@gmail.com',
         apiKey: "MK_TEST_QA372KPS4C",
@@ -29,7 +29,7 @@ function App():React.JSX.Element {
           if (response.status === 'SUCCESS') {
             console.log('Payment was successful');
             // Redirect back to your app
-            window.location.href = `selaconnect://confirmpayment/${orderId}`;
+            window.location.href = `selaconnect://confirmpayment/${delivery}`;
           } else {
             console.log('Payment was unsuccessful');
           }
@@ -41,7 +41,7 @@ function App():React.JSX.Element {
     });
 }
 useEffect(()=>{
-  payWithMonnify(String(Math.floor(Math.random() * 1000000000)))
+  payWithMonnify()
 },[])
 
 
