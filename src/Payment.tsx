@@ -1,17 +1,56 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {  useSearchParams } from "react-router-dom";
+
 import './App.css'
+
+export interface deliveryOrder {
+    packageDescription: string;
+    packageWeight?: number;
+    perishables: boolean;
+    fragile: boolean;
+    pickupIsResidential: boolean;
+    dropoffIsRedential: boolean;
+    pickupRestrictions?:string;
+    dropoffRestrictions?:string;
+    senderName: string;
+    senderPhoneNo: string;
+    receiverName: string;
+    receiverPhoneNo: string;
+    pickupAddress: string;
+    dropoffAddress: string;
+    pickupLga: string;
+    dropoffLga: string;
+    paymentMethod: 'online' | 'ondelivery' | 'onpickup';
+    totalDistance: number;
+    user: string | undefined;
+    deliveryId:string;
+}
+import { getDeliveryById } from './firestore';
+
 
 export function Pay():React.JSX.Element {
   const [searchParams] = useSearchParams();
-  const delivery = searchParams.get('delivery');
+  const orderId = searchParams.get('delivery'); 
+  const [order,setOrder] = useState<deliveryOrder | null>()
 
+  function getDelivery(){
+    console.log('getting delivery')
+    if(orderId){
+        getDeliveryById(orderId).then(res=>{
+            console.log('res', res)
+        })
+    }
+    
+  }
+  useEffect(()=>{
+    getDelivery()
+  }, [])
   const payWithMonnify = async () => {
     let monnify = window.MonnifySDK
     monnify.initialize({
         amount: 10000,
         currency: "NGN",
-        reference: delivery,
+        reference: orderId,
         customerFullName: 'Abayomi Adefuye',
         customerEmail: 'adefuyeabayomi16@gmail.com',
         apiKey: "MK_TEST_QA372KPS4C",
@@ -29,7 +68,7 @@ export function Pay():React.JSX.Element {
           if (response.status === 'SUCCESS') {
             console.log('Payment was successful');
             // Redirect back to your app
-            window.location.href = `selaconnect://confirmpayment/${delivery}`;
+            window.location.href = `selaconnect://confirmpayment/${orderId}`;
           } else {
             console.log('Payment was unsuccessful');
           }
@@ -40,11 +79,6 @@ export function Pay():React.JSX.Element {
         }
     });
 }
-useEffect(()=>{
-    setTimeout(()=>{
-         payWithMonnify()
-    },4000)
-},[])
     return (
         <div>
             <button onClick={payWithMonnify}>Pay For Delivery</button>
