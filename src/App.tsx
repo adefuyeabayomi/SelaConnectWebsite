@@ -1,15 +1,10 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Pay } from './Payment';
-
+import Navigation from './navigation';
+import { LoadingContextProvider } from './contexts/LoadingContext';
 function App():React.JSX.Element {
   return (
-    <>
-    <Router>
-      <Routes>
-        <Route path='/' Component={Pay}></Route>
-      </Routes>
-    </Router>
-    </>
+    <LoadingContextProvider>
+      <Navigation />
+    </LoadingContextProvider>
   )
 }
 

@@ -1,0 +1,73 @@
+.home {
+    padding-top: 80px; /* Offset for fixed header */
+}
+
+.hero {
+    height: 80vh;
+    background: url('../../assets/2151663003.jpg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-content h1 {
+    color: white;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.hero-content p {
+    color: white;
+    font-size: 18px;
+    margin-top: 15px;
+}
+
+.services {
+    margin-top: 50px;
+}
+
+.services h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #FF9B09;
+}
+
+.service-card {
+    text-align: center;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.discount-section {
+    background-color: #e67d05;
+    padding: 50px 0;
+    text-align: center;
+    color: white;
+}
+
+.discount-section h2 {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.how-it-works {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.how-it-works h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #FF9B09;
+}
+
+.how-it-works-card {
+    text-align: center;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

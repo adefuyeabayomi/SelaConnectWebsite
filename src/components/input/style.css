@@ -1,0 +1,61 @@
+.d-input-container-main.type-1 input,
+.d-textarea-container textarea {
+  width: 100%;
+  height: 45px;
+  border-radius: 5px;
+  border: 0px solid;
+  padding: 10px;
+  padding-right: 10px;
+}
+.d-textarea-container textarea {
+  height: 100px;
+}
+
+.light-input,
+.light-textarea {
+  background: #f1f1f1;
+  color: #3441a1;
+}
+
+.dark-input,
+.dark-textarea {
+  background: #4b4b4b;
+  color: #c5c5c5;
+}
+
+.d-input-container-main.type-1 {
+  width: 100%;
+  border-radius: 5px;
+  border: 0px solid !important;
+  position: relative;
+}
+
+.d-input-container-main.type-1 input::placeholder,
+.d-textarea-container textarea::placeholder {
+  color: #787878;
+}
+
+input:focus,
+textarea:focus {
+  border-color: blue; /* Change border color */
+  box-shadow: 0 0 5px rgba(0, 0, 255, 0.581); /* Add a shadow effect */
+  outline: none; /* Remove the default focus outline */
+}
+
+.d-input-left-icon {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.d-input-right-icon {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 9px;
+}
+.valid-true {
+  color: green;
+}
+.valid-false {
+  color: #993838;
+}
