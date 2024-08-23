@@ -11,7 +11,7 @@ function Home() {
             <section className="hero py-2">
                 <div className="hero-content">
                     <h1>Fast and Reliable Logistics Solutions</h1>
-                    <p>Delivering your packages with speed and precision, anytime, anywhere.</p>
+                    <p>Sela Connect Offers dispatch delivery services within Lagos. Our wide network guarantees that your packages arrives exactly on your schedule..</p>
                 </div>
             </section>
             <div className='py-2'/>
