@@ -4,6 +4,7 @@ import { D_TextInput } from "../../components/input";
 import { ButtonMain } from "../../components/button";
 import authService from "../../service/authService";
 import { useLoading } from "../../contexts/LoadingContext";
+import DModal from "../../components/modal";
 
 export default function ResetPasswordPage(): React.JSX.Element {
   const [newPassword, setNewPassword] = useState<string>("");
@@ -11,6 +12,9 @@ export default function ResetPasswordPage(): React.JSX.Element {
   const resetToken = searchParams.get("resetToken") || "";
   const [feedback, setFeedback] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean | null>(null);
+  const [modalOpen,setModalOpen] = useState(false)
+  let [modalTitle,setModalTitle] = useState('')
+  let [modalBody,setModalBody] = useState('')
 
   const { setLoading, setLoadingText } = useLoading();
 
@@ -28,13 +32,15 @@ export default function ResetPasswordPage(): React.JSX.Element {
       const response = await authService.resetPassword(resetToken, newPassword);
       // Handle success response
       console.log("Password reset successful:", response.message);
-      setFeedback("Password reset successful.");
+      setModalTitle('Password Reset successfully')
+      setModalBody('You can now proceed to login with your new password on the app.')
       setIsValid(true);
-    } catch (error) {
+    } catch (error: any) {
       // Handle error response
       console.error("Password reset failed:", error);
-      setFeedback("Password reset failed. Please try again.");
       setIsValid(false);
+      setModalTitle('Error')
+      setModalBody('Unable to reset password' + error.message)
     } finally {
       setLoading(false);
     }
@@ -42,6 +48,10 @@ export default function ResetPasswordPage(): React.JSX.Element {
 
   return (
     <div className="container-fluid no-space">
+        <DModal onClose={()=> setModalOpen(!modalOpen)} isOpen={modalOpen}>
+            <h3>{modalTitle}</h3>
+            <p>{modalBody}</p>
+        </DModal>
         <div className="row no-space justify-content-center">
             <div className="reset-password-page p-3 center col-12 col-sm-10 col-md-6">
             <div className="py-4" />
