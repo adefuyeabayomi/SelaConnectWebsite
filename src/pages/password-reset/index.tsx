@@ -32,6 +32,7 @@ export default function ResetPasswordPage(): React.JSX.Element {
       const response = await authService.resetPassword(resetToken, newPassword);
       // Handle success response
       console.log("Password reset successful:", response.message);
+      setModalOpen(true)
       setModalTitle('Password Reset successfully')
       setModalBody('You can now proceed to login with your new password on the app.')
       setIsValid(true);
@@ -39,6 +40,7 @@ export default function ResetPasswordPage(): React.JSX.Element {
       // Handle error response
       console.error("Password reset failed:", error);
       setIsValid(false);
+      setModalOpen(true)
       setModalTitle('Error')
       setModalBody('Unable to reset password' + error.message)
     } finally {
