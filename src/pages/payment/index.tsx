@@ -39,12 +39,16 @@ export default function PaymentPage(): React.JSX.Element {
         setLoading(false);
         console.log({response})
         if (response.status === "SUCCESS") {
-          console.log("Payment was successful");
+          deliveryOrder.confirmPayment(deliveryId as string,response.paymentReference,response.transactionReference).then(x=>{
+          console.log("Payment was successful", x);
           setModalTitle("Payment Successful");
           setModalBody(
             "Dear Customer, Your payment has been received. Check back in the app to track your package. Thank you for using Sela Connect Logistics."
           );
           window.location.href = `selaconnect://confirmpayment/${deliveryId}`;
+          }).catch(err=>{
+            console.error(err)
+          })
         } else {
           console.log("Payment was unsuccessful");
           setModalTitle("Payment Unsuccessful");
@@ -57,8 +61,8 @@ export default function PaymentPage(): React.JSX.Element {
     });
   };
 
-  const handlePayment = async () => {
-    if (!deliveryId && !deliveryInput) {
+  const handlePayment = async (val='') => {
+    if (!deliveryId && !deliveryInput && val !== 'init') {
       setModalTitle("Input Required");
       setModalBody("Please input the delivery ID you want to pay for.");
       setIsOpen(true)
@@ -84,8 +88,9 @@ export default function PaymentPage(): React.JSX.Element {
     }
   };
 
+
   useEffect(() => {
-    handlePayment();
+    handlePayment('init');
   }, []);
 
   return (
@@ -94,10 +99,11 @@ export default function PaymentPage(): React.JSX.Element {
       {!tryAgain ? (
         <div className="payment-page p-3 col-12 col-sm-10 col-md-7">
           <DModal isOpen={isOpen} onClose={toggleModal}>
-            <div className="py-2">
-              <h3>{modalTitle}</h3>
-              <div className="py-1" />
-              <p>{modalBody}</p>
+            <div className="px-2">
+            <div className="py-2" />
+              <h3 className="text-center">{modalTitle}</h3>
+              <p className="text-center">{modalBody}</p>
+              <div className="py-2" />
             </div>
           </DModal>
           <div className="py-4" />
@@ -114,19 +120,17 @@ export default function PaymentPage(): React.JSX.Element {
                 dark={false}
               />
               <div className="py-2" />
-            </>
-          )}
-          <div onClick={handlePayment}>
-            <ButtonMain actionFn={handlePayment} style={{ marginTop: "20px" }}>
+          <div>
+            <ButtonMain actionFn={()=>handlePayment("")} style={{ marginTop: "20px" }}>
               <span className="py-1 d-inline-block">
                 {deliveryId ? "Pay Now" : "Proceed to Pay"}
               </span>
             </ButtonMain>
           </div>
+            </>
+          )}
           <div className="py-4" />
         </div>
-
-
       ) : null}
       {tryAgain ? (
         <div className="payment-page p-3 py-5">
@@ -137,8 +141,8 @@ export default function PaymentPage(): React.JSX.Element {
             </h5>
           </div>
           <div className="col-12 no-space">
-            <div onClick={handlePayment}>
-              <ButtonMain>
+            <div>
+              <ButtonMain actionFn={()=>handlePayment("")}>
                 <span className="py-1 d-inline-block">Try Again</span>
               </ButtonMain>
             </div>

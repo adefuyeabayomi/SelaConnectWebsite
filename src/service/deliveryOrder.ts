@@ -4,28 +4,42 @@ import axiosInstance from './axiosInstance'; // Adjust the path as necessary
 
 // Define the DeliveryOrder interface
 export interface DeliveryOrder {
-  packageDescription: string;
+  packageDescription?: string;
   packageWeight?: number;
-  perishables: boolean;
-  fragile: boolean;
-  pickupIsResidential: boolean;
-  dropoffIsResidential: boolean;
+  perishables?: boolean;
+  fragile?: boolean;
+  pickupIsResidential?: boolean;
+  dropoffIsResidential?: boolean;
   pickupRestrictions?: string;
   dropoffRestrictions?: string;
   senderName: string;
   senderPhoneNo: string;
   receiverName: string;
   receiverPhoneNo: string;
-  price?:number;
   pickupAddress: string;
   dropoffAddress: string;
-  pickupLga: string;
-  dropoffLga: string;
+  pickupArea: string;
+  dropoffArea: string;
   paymentMethod: 'online' | 'ondelivery' | 'onpickup';
-  totalDistance: number;
+  paymentStatus?: 'pending' | 'paid';
+  price: number;
+  totalDistance?: number;
+  user?: string; // assuming the User model uses a string ID
   deliveryId: string;
-  user?:string;
+  vendor?: boolean;
+  assignedRider?: string;
+  deliveryTrackStatus?: 'pending' | 'started' | 'picked' | 'dropped';
+  isExpress?: boolean;
+  isBulk?: boolean;
+  bulkOptions?: Record<string, any>;
+  isSchedule?: boolean;
+  scheduleOptions?: Record<string, any>;
+  costData?: Record<string, any>;
+  locationData?: Record<string, any>;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
+
 
 // Service functions
 
@@ -76,9 +90,27 @@ const getDeliveryOrderById = async (orderId: string) => {
   }
 };
 
+const confirmPayment = async (orderId: string, paymentRef: string, transactionReference: string) => {
+  try {
+    const response = await axiosInstance.post(
+      '/delivery-orders/confirm-payment',
+      {
+        id: orderId,
+        paymentRef,
+        transactionReference,
+      },
+      {}
+    );
+    return response.data;
+  } catch (error: any) {
+    throw new Error(`Error confirming payment: ${error.message}`);
+  }
+};
+
 export default {
   createDeliveryOrder,
   updateDeliveryOrder,
   getDeliveryOrders,
   getDeliveryOrderById,
+  confirmPayment
 };
