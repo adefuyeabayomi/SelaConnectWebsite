@@ -6,6 +6,7 @@ import Header from "../components/header";
 import Home from "../pages/home";
 import Footer from "../components/footer";
 import ResetPasswordPage from "../pages/password-reset";
+import PaymentPage from "../pages/payment";
 
 function Navigation(): React.JSX.Element {
   return (
@@ -16,6 +17,7 @@ function Navigation(): React.JSX.Element {
         <Routes>
         <Route path="/" Component={Home} />
         <Route path="/password-reset" Component={ResetPasswordPage} />
+        <Route path="/payment" Component={PaymentPage} />
         </Routes>
         <Footer></Footer>
       </Router>
