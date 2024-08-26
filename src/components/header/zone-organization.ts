@@ -1,4 +1,4 @@
-    const areas = [
+    export const areas = [
         // Mainland A
         "Surulere", "Costain", "Mushin", "Obanikoro", "Onipanu", "Orile", "Ijora", "Oyingbo", 
         "Yaba", "Ebutte-Metta", "Lawanson",
