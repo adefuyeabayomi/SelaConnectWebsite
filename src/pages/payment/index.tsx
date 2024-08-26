@@ -45,6 +45,7 @@ export default function PaymentPage(): React.JSX.Element {
           setModalBody(
             "Dear Customer, Your payment has been received. Check back in the app to track your package. Thank you for using Sela Connect Logistics."
           );
+          setIsOpen(true)
           window.location.href = `selaconnect://confirmpayment/${deliveryId}`;
           }).catch(err=>{
             console.error(err)
@@ -53,9 +54,9 @@ export default function PaymentPage(): React.JSX.Element {
           console.log("Payment was unsuccessful");
           setModalTitle("Payment Unsuccessful");
           setModalBody("Dear Customer, Your payment was unsuccessful. Please try again.");
+          setIsOpen(true)
           setTryAgain(true);
         }
-        setIsOpen(true)
       },
       onClose: (data: any) => console.log("Payment modal closed", data),
     });
