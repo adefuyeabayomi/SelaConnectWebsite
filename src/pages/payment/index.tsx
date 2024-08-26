@@ -37,6 +37,7 @@ export default function PaymentPage(): React.JSX.Element {
       onLoadComplete: () => console.log("SDK is UP"),
       onComplete: (response: any) => {
         setLoading(false);
+        console.log({response})
         if (response.status === "SUCCESS") {
           console.log("Payment was successful");
           setModalTitle("Payment Successful");
