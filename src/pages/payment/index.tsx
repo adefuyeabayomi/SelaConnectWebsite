@@ -39,7 +39,7 @@ export default function PaymentPage(): React.JSX.Element {
         setLoading(false);
         console.log({response})
         if (response.status === "SUCCESS") {
-          deliveryOrder.confirmPayment(deliveryId as string,response.paymentReference,response.transactionReference).then(x=>{
+          deliveryOrder.confirmPayment(deliveryId as string || deliveryInput,response.paymentReference,response.transactionReference).then(x=>{
           console.log("Payment was successful", x);
           setModalTitle("Payment Successful");
           setModalBody(
