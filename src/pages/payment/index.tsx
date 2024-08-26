@@ -21,15 +21,15 @@ export default function PaymentPage(): React.JSX.Element {
 
   const toggleModal = () => setIsOpen((val) => !val);
 
-  const payWithMonnify = async (amount: number) => {
+  const payWithMonnify = async (amount: number, email: string) => {
     let monnify = window.MonnifySDK;
     setTryAgain(false);
     monnify.initialize({
       amount,
       currency: "NGN",
       reference: deliveryId,
-      customerFullName: "Abayomi Adefuye",
-      customerEmail: "adefuyeabayomi16@gmail.com",
+      customerFullName: email.split("@")[0],
+      customerEmail: email,
       apiKey: "MK_TEST_QA372KPS4C",
       contractCode: "5878350992",
       paymentDescription: `Payment for Delivery Services`,
@@ -72,7 +72,7 @@ export default function PaymentPage(): React.JSX.Element {
         deliveryId || deliveryInput
       );
       console.log({ response });
-      payWithMonnify(response.price);
+      payWithMonnify(response.price, response.email);
     } catch (err: any) {
       setTryAgain(true);
       setModalTitle("An Error Occurred");
