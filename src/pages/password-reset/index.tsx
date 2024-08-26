@@ -70,7 +70,7 @@ export default function ResetPasswordPage(): React.JSX.Element {
             <div className="py-2" />
             <div onClick={handleResetPassword}>
                 <ButtonMain actionFn={handleResetPassword} style={{ marginTop: "20px" }}>
-                Reset Password
+                <span className="py-1">Reset Password</span>
                 </ButtonMain>
             </div>
             <div className="py-4" />
